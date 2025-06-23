@@ -33,7 +33,16 @@ app.post("/shorturls", (req, res) => {
     });
 });
 
-
+app.get("/shorturls", (req, res) => {
+  const result = Object.entries(shortLinks).map(([code, data]) => ({
+    shortcode: code,
+    "Number of clicks": data.clicks || 0,
+    "points-to": data.url,
+    "creation-date": data.createdAt,
+    "expiry-date": data.expiry
+  }));
+  res.json(result);
+});
 
 app.listen(port, () => {
     console.log(`URL shortener service running at http://localhost:${port}`);
